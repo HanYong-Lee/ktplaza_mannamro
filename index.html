@@ -99,15 +99,27 @@
           <h2>이 달의 소식</h2>
           <p class="section__desc">숏츠/세로 영상(9:16) 최적화 영역입니다.</p>
         </div>
-
+      
         <div class="card">
           <div class="ratioVideo ratioVideo--9x16">
-            <video class="ratioVideo__video" playsinline controls preload="metadata">
-              <source src="assets/news.mp4" type="video/mp4" />
+            <video
+              class="ratioVideo__video"
+              playsinline
+              controls
+              preload="metadata"
+              poster="https://example.com/news-poster.jpg"
+            >
+              <!-- 🔽 여기 src만 외부 영상 링크로 교체 -->
+              <source
+                src="https://example.com/news.mp4"
+                type="video/mp4"
+              />
+              브라우저가 동영상을 지원하지 않습니다.
             </video>
           </div>
+      
           <div class="card__note">
-            영상 파일을 <b>assets/news.mp4</b>로 올리면 자동 표시됩니다.
+            ※ 본 영상은 외부 링크로 스트리밍 제공됩니다.
           </div>
         </div>
       </div>
