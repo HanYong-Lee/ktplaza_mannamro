@@ -435,7 +435,7 @@ body{
 .footer__small{margin-top: 6px; font-size: 12px; font-weight: 650}
 
 /* Small screens tweaks */
-@media (max-width: 360px){
+@media (max-width: 320px){
   .grid{grid-template-columns: 1fr}
   .topbar__ctaText{display:none}
   .topbar__cta{padding:10px 12px}
