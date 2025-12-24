@@ -6,7 +6,17 @@
   <meta name="theme-color" content="#0B1B3B" />
   <title>KT플라자 만남로점 | 통합 안내</title>
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="style.css">
+  <!-- PWA manifest & icons -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/kt-icon-192.png">
+  <link rel="apple-touch-icon" href="icons/kt-icon-192.png">
+  <meta name="theme-color" content="#25a25a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="KT플라자 만남점">
 </head>
+
 
 <body>
   <!-- Intro Overlay (tap to skip) -->
@@ -304,5 +314,19 @@
   </main>
 
   <script src="script.js"></script>
+    <!-- Service Worker registration for PWA -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(function(reg) {
+            console.log('ServiceWorker registered:', reg.scope);
+          })
+          .catch(function(error) {
+            console.log('ServiceWorker registration failed:', error);
+          });
+      });
+    }
+  </script>
 </body>
 </html>
