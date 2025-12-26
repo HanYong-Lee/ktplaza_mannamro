@@ -76,94 +76,54 @@
 
 
 (function () {
-  const root = document.querySelector("[data-core-diff]");
-  if (!root) return;
+  const wrap = document.querySelector("[data-bullet-accord]");
+  if (!wrap) return;
 
-  const range = root.querySelector(".coreDiff__range");
-  const chips = Array.from(root.querySelectorAll("[data-core-chip]"));
-  const card = root.querySelector(".coreDiff__card");
-  const badge = root.querySelector("[data-core-badge]");
-  const headline = root.querySelector("[data-core-headline]");
-  const desc = root.querySelector("[data-core-desc]");
+  const items = Array.from(wrap.querySelectorAll(".bulletCard"));
 
-  const items = [
-    {
-      badge: "① 공식 신뢰",
-      headline: "KT 직영 플라자, 기준이 다릅니다.",
-      desc: "개인 판매점이 아닌 KT 공식 채널로, 정확하고 투명한 기준에 따라 안내합니다."
-    },
-    {
-      badge: "② 끝까지 케어",
-      headline: "개통은 시작일 뿐, 관리는 지금부터입니다.",
-      desc: "요금·결합·명의·분실·해지까지. 문제가 생기면 다시 찾을 수 있는 매장입니다."
-    },
-    {
-      badge: "③ 맞춤 설계",
-      headline: "싸게 파는 대신, 맞게 안내합니다.",
-      desc: "사용 패턴·가족 구성·생활 환경을 고려해 불필요한 요금과 선택을 줄여드립니다."
-    },
-    {
-      badge: "④ 소상공인 솔루션",
-      headline: "통신이 비용이 아닌, 운영의 힘이 되도록.",
-      desc: "사업장 환경에 맞춘 인터넷·전화·AI 솔루션으로 매장 운영에 도움이 되는 통신을 제안합니다."
-    },
-    {
-      badge: "⑤ 쉬운 안내",
-      headline: "어렵게 느껴질 필요 없습니다.",
-      desc: "시니어부터 1인 사장님까지, 쉽고 천천히 이해될 때까지 안내합니다."
-    }
-  ];
+  // 접근성: 패널에 id 부여 + 버튼 aria-controls 연결
+  items.forEach((li, idx) => {
+    const btn = li.querySelector(".bulletCard__btn");
+    const panel = li.querySelector(".bulletCard__panel");
+    if (!btn || !panel) return;
 
-  let current = 0;
-  let lock = false;
+    const panelId = `bulletCardPanel_${idx}`;
+    panel.id = panelId;
+    btn.setAttribute("aria-controls", panelId);
 
-  function setActiveChip(i) {
-    chips.forEach((c) => c.classList.remove("is-active"));
-    const target = chips.find((c) => Number(c.dataset.coreChip) === i);
-    if (target) target.classList.add("is-active");
+    // 초기 상태 동기화
+    const isOpen = li.classList.contains("is-open");
+    btn.setAttribute("aria-expanded", String(isOpen));
+  });
+
+  function closeAll(except) {
+    items.forEach((li) => {
+      if (li === except) return;
+      li.classList.remove("is-open");
+      const btn = li.querySelector(".bulletCard__btn");
+      if (btn) btn.setAttribute("aria-expanded", "false");
+    });
   }
 
-  function render(i) {
-    const it = items[i];
-    badge.textContent = it.badge;
-    headline.textContent = it.headline;
-    desc.textContent = it.desc;
-  }
+  items.forEach((li) => {
+    const btn = li.querySelector(".bulletCard__btn");
+    if (!btn) return;
 
-  function show(i) {
-    i = Math.max(0, Math.min(4, Number(i)));
-    if (i === current || lock) {
-      range.value = String(i);
-      setActiveChip(i);
-      return;
-    }
+    btn.addEventListener("click", () => {
+      const willOpen = !li.classList.contains("is-open");
 
-    lock = true;
-    setActiveChip(i);
-    range.value = String(i);
+      closeAll(li);
 
-    // Fade out
-    card.classList.add("is-fading");
+      if (willOpen) {
+        li.classList.add("is-open");
+        btn.setAttribute("aria-expanded", "true");
 
-    // 내용 교체 타이밍
-    window.setTimeout(() => {
-      render(i);
-      // Fade in
-      card.classList.remove("is-fading");
-      current = i;
-      lock = false;
-    }, 180);
-  }
-
-  // 초기 렌더
-  render(0);
-  setActiveChip(0);
-
-  // Drag
-  range.addEventListener("input", (e) => show(e.target.value));
-
-  // Chip click
-  chips.forEach((btn) => {
-    btn.addEventListener("click", () => show(btn.dataset.coreChip));
+        // 모바일에서 펼친 항목이 화면에 잘 보이도록 부드럽게 위치 보정(선택)
+        li.scrollIntoView({ block: "nearest", behavior: "smooth" });
+      } else {
+        li.classList.remove("is-open");
+        btn.setAttribute("aria-expanded", "false");
+      }
+    });
   });
 })();
