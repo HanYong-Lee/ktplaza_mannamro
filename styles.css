@@ -608,3 +608,196 @@ a, button { touch-action: manipulation; }
   color: rgba(10,18,36,.62);
   font-weight: 700;
 }
+
+
+/* =========================
+   Core Diff (Drag + Fade)
+   ========================= */
+
+.coreDiff{
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 18px;
+  border: 1px solid rgba(11,27,59,.10);
+  background: linear-gradient(180deg, rgba(245,248,255,.92), rgba(255,255,255,1));
+  box-shadow: var(--elev-1);
+}
+
+.coreDiff__head{
+  display:grid;
+  gap:6px;
+  margin-bottom: 10px;
+}
+.coreDiff__title{
+  font-weight: 950;
+  font-size: 14px;
+  letter-spacing: -.2px;
+  color: var(--navy);
+}
+.coreDiff__sub{
+  font-size: 12px;
+  color: rgba(10,18,36,.65);
+  font-weight: 750;
+  line-height: 1.45;
+}
+
+.coreDiff__chips{
+  display:flex;
+  gap:8px;
+  overflow:auto;
+  padding: 4px 2px 8px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.coreDiff__chips::-webkit-scrollbar{display:none}
+
+.coreDiff__chip{
+  border: 1px solid rgba(11,27,59,.12);
+  background: #fff;
+  color: rgba(11,27,59,.88);
+  font-weight: 950;
+  font-size: 12px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform .14s ease, box-shadow .14s ease, border-color .14s ease, filter .14s ease;
+  box-shadow: 0 8px 16px rgba(12,18,40,.08);
+}
+.coreDiff__chip:active{
+  transform: translateY(1px) scale(.99);
+  filter: brightness(.98);
+}
+.coreDiff__chip.is-active{
+  border-color: rgba(230,0,18,.28);
+  background: linear-gradient(135deg, rgba(230,0,18,.10), rgba(255,42,58,.10));
+  box-shadow: 0 12px 22px rgba(230,0,18,.10);
+}
+
+.coreDiff__rangeWrap{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding: 6px 2px 10px;
+}
+.coreDiff__hint{
+  font-size: 11px;
+  color: rgba(10,18,36,.55);
+  font-weight: 800;
+}
+
+.coreDiff__range{
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(11,27,59,.10);
+  border: 1px solid rgba(11,27,59,.12);
+  outline: none;
+}
+.coreDiff__range::-webkit-slider-thumb{
+  -webkit-appearance: none;
+  appearance: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--red), #FF2A3A);
+  box-shadow: 0 12px 22px rgba(230,0,18,.22);
+  border: 4px solid #fff;
+  cursor: grab;
+}
+.coreDiff__range:active::-webkit-slider-thumb{ cursor: grabbing; }
+.coreDiff__range::-moz-range-thumb{
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--red), #FF2A3A);
+  border: 4px solid #fff;
+  box-shadow: 0 12px 22px rgba(230,0,18,.22);
+  cursor: grab;
+}
+
+.coreDiff__card{
+  margin-top: 8px;
+  border-radius: 18px;
+  overflow:hidden;
+  border: 1px solid rgba(11,27,59,.10);
+  background: #fff;
+}
+
+.coreDiff__badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-weight: 950;
+  font-size: 12px;
+  padding: 8px 10px;
+  margin: 12px 12px 0;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--red), #FF2A3A);
+  color:#fff;
+}
+
+.coreDiff__body{
+  padding: 10px 12px 12px;
+}
+.coreDiff__headline{
+  margin: 6px 0 6px;
+  font-size: 14px;
+  font-weight: 950;
+  letter-spacing: -.2px;
+  color: var(--navy);
+}
+.coreDiff__desc{
+  margin: 0;
+  font-size: 12px;
+  color: rgba(10,18,36,.72);
+  font-weight: 750;
+  line-height: 1.55;
+}
+
+/* Fade In/Out */
+.coreDiff__card.is-fading{
+  opacity: 0;
+  transform: translateY(6px);
+  filter: blur(1px);
+  transition: opacity .22s ease, transform .22s ease, filter .22s ease;
+}
+.coreDiff__card{
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+  transition: opacity .28s ease, transform .28s ease, filter .28s ease;
+}
+
+/* 사진 하단 신뢰 문구 */
+.heroCard__trust{
+  display:block;
+  margin-top: 4px;
+  font-weight: 900;
+  color: rgba(10,18,36,.72);
+}
+
+/* 작은 CTA (섹션 마무리용) */
+.coreDiff__cta{
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 16px;
+  border: 1px dashed rgba(230,0,18,.28);
+  background: rgba(230,0,18,.06);
+  font-weight: 900;
+  font-size: 12px;
+  color: rgba(11,27,59,.86);
+}
+
+/* 모션 최소화 */
+@media (prefers-reduced-motion: reduce){
+  .coreDiff__card,
+  .coreDiff__card.is-fading{
+    transition: none !important;
+    transform: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+  }
+}
